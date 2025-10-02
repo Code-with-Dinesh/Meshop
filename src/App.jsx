@@ -12,6 +12,7 @@ import SignUp from './components/SignUp'
 import toast, { Toaster } from 'react-hot-toast'
 import { auth } from './Firebase/Firebase'
 import Singleproduct from './components/Singleproduct'
+import ProtectedRoute from './auth/ProtectedRoute'
 
 const App = () => {
   const [cart,setcart] = useState([])
@@ -96,12 +97,12 @@ const App = () => {
        <Navbar username={username} cart={cart}/>
         <Routes>
           <Route path='/' element={<Home cart={cart}/>} />
-          <Route path='/cart' element={<Cart cart={cart} hide={hide} sethide={sethide}  display={display} setPromo={setPromo} promo={promo} incrHandler={incrHandler} totalprice={totalprice} decrHandler={decrHandler} removecart={removecart} /> }  />
+          <Route path='/cart' element={ <ProtectedRoute> <Cart cart={cart} hide={hide} sethide={sethide}  display={display} setPromo={setPromo} promo={promo} incrHandler={incrHandler} totalprice={totalprice} decrHandler={decrHandler} removecart={removecart} /> </ProtectedRoute>}  />
           <Route path='/about' element={<About/>}/>
           <Route path='/contact' element={<Contact/>}/>
           {/* <Route path='/allproduct' element={<Allproduct/>}  handlecart={handlecart}/> */}
-          <Route path='/allproduct' element={<Allproduct handlecart={handlecart}  />} />
-          <Route path='/singleproduct/:id' element={<Singleproduct   handlecart={handlecart}  />}/>
+          <Route path='/allproduct' element={<ProtectedRoute> <Allproduct handlecart={handlecart}  /> </ProtectedRoute>} />
+          <Route path='/singleproduct/:id' element={<ProtectedRoute><Singleproduct   handlecart={handlecart}  /> </ProtectedRoute> }/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<SignUp/>}/>
         </Routes>
